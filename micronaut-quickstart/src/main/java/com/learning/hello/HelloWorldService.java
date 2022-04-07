@@ -1,11 +1,14 @@
 package com.learning.hello;
 
+import io.micronaut.context.annotation.Primary;
 import jakarta.inject.Singleton;
 
+@Primary
 @Singleton
-public class HelloWorldService {
+public class HelloWorldService implements MyService{
 
-    String helloWorldService() {
+    @Override
+    public String helloWorldService() {
         return "Hello World from Service!";
     }
 }

@@ -7,9 +7,9 @@ import io.micronaut.http.annotation.Get;
 @Controller("/hello")
 public class HelloWorldController {
 
-    private final HelloWorldService service;
+    private final MyService service;
 
-    public HelloWorldController(HelloWorldService service) {
+    public HelloWorldController(MyService service) {
         this.service = service;
     }
 
