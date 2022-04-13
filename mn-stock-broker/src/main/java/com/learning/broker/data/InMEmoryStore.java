@@ -14,7 +14,7 @@ public class InMEmoryStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(InMEmoryStore.class);
     private final Map<String, Symbol> symbols = new HashMap<>();
-    private final String[] symbolsStr = {"TGA", "QTNT", "FALN", "SBNY", "NBIX", "ORG", "~VTWV", "QVCA", "PTIE", "BWLD"};
+    private final String[] symbolsStr = {"TGA", "QTNT", "FALN", "SBNY", "NBIX", "ORG", "VTWV", "QVCA", "PTIE", "BWLD"};
 
     @PostConstruct
     public void initialize() {
