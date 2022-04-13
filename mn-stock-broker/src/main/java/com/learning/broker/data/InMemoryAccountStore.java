@@ -1,9 +1,11 @@
 package com.learning.broker.data;
 
+import com.learning.broker.wallet.DepositFiatMoney;
 import com.learning.broker.wallet.Wallet;
 import com.learning.broker.watchlist.WatchList;
 import jakarta.inject.Singleton;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Singleton
@@ -30,5 +32,27 @@ public class InMemoryAccountStore {
         return Optional.ofNullable(walletsPerAccount.get(accountId))
                 .orElse(new HashMap<>())
                 .values();
+    }
+
+    public Wallet depositToWallet(DepositFiatMoney deposit) {
+        var wallets = Optional.ofNullable(
+                walletsPerAccount.get(deposit.getAccountId())
+        ).orElse(
+                new HashMap<>()
+        );
+
+        var oldWallet = Optional.ofNullable(
+                wallets.get(deposit.getWalletId())
+        ).orElse(
+                new Wallet(ACCOUNT_ID, deposit.getWalletId(), deposit.getSymbol(), BigDecimal.ZERO, BigDecimal.ZERO)
+        );
+
+        var newWallet = oldWallet.addAvailable(deposit.getAmount());
+
+        // Update wallet in store
+        wallets.put(newWallet.getWalletId(), newWallet);
+        walletsPerAccount.put(newWallet.getAccountId(), wallets);
+
+        return newWallet;
     }
 }

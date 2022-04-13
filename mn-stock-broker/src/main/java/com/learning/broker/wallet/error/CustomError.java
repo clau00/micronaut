@@ -1,6 +1,8 @@
 package com.learning.broker.wallet.error;
 
-public class CustomError {
+import com.learning.broker.api.RestApiResponse;
+
+public class CustomError implements RestApiResponse {
 
     private int status;
     private String error;

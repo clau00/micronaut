@@ -1,5 +1,6 @@
 package com.learning.broker.wallet;
 
+import com.learning.broker.api.RestApiResponse;
 import com.learning.broker.data.InMemoryAccountStore;
 import com.learning.broker.wallet.error.CustomError;
 import io.micronaut.http.HttpResponse;
@@ -10,6 +11,8 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +22,7 @@ import static com.learning.broker.data.InMemoryAccountStore.ACCOUNT_ID;
 @Controller("/account/wallets")
 public class WalletController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(WalletController.class);
     public static final List<String> SUPPORTED_FIAT_CURRENCIES = List.of("EUR", "USD", "CHE", "GBP");
 
     private final InMemoryAccountStore store;
@@ -37,7 +41,7 @@ public class WalletController {
             consumes = MediaType.APPLICATION_JSON,
             produces = MediaType.APPLICATION_JSON
     )
-    public MutableHttpResponse<CustomError> depositFiatMoney(@Body DepositFiatMoney deposit) {
+    public MutableHttpResponse<RestApiResponse> depositFiatMoney(@Body DepositFiatMoney deposit) {
         //  Option 1: Custom HttpResponse
         if(!SUPPORTED_FIAT_CURRENCIES.contains(deposit.getSymbol().getValue())) {
             return HttpResponse.badRequest()
@@ -48,7 +52,9 @@ public class WalletController {
                     ));
         }
 
-        return HttpResponse.ok();
+        var wallet = store.depositToWallet(deposit);
+        LOG.debug("Deposit to wallet: {}", wallet);
+        return HttpResponse.ok().body(wallet);
     }
 
     @Post(
