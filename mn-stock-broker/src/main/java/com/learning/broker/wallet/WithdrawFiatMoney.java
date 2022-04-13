@@ -12,6 +12,9 @@ public class WithdrawFiatMoney {
     private Symbol symbol;
     private BigDecimal amount;
 
+    public WithdrawFiatMoney() {
+    }
+
     public WithdrawFiatMoney(UUID accountId, UUID walletId, Symbol symbol, BigDecimal amount) {
         this.accountId = accountId;
         this.walletId = walletId;

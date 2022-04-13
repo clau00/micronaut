@@ -45,4 +45,15 @@ public class Wallet implements RestApiResponse {
     public Wallet addAvailable(BigDecimal amountToAdd) {
         return new Wallet(this.accountId, this.walletId, this.symbol, this.available.add(amountToAdd), this.locked);
     }
+
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "accountId=" + accountId +
+                ", walletId=" + walletId +
+                ", symbol=" + symbol +
+                ", available=" + available +
+                ", locked=" + locked +
+                '}';
+    }
 }

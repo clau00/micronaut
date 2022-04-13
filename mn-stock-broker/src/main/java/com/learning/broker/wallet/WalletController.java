@@ -3,6 +3,7 @@ package com.learning.broker.wallet;
 import com.learning.broker.api.RestApiResponse;
 import com.learning.broker.data.InMemoryAccountStore;
 import com.learning.broker.wallet.error.CustomError;
+import com.learning.broker.wallet.error.FiatCurrencyNotSupportedException;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -64,6 +65,9 @@ public class WalletController {
     )
     public void withdrawFiatMoney(@Body WithdrawFiatMoney withdraw) {
         //  Option 2: Custom Error Processing
+        if(!SUPPORTED_FIAT_CURRENCIES.contains(withdraw.getSymbol().getValue())) {
+            throw new FiatCurrencyNotSupportedException(String.format("Only %s are supported", SUPPORTED_FIAT_CURRENCIES));
+        }
     }
 
 
