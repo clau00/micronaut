@@ -1,6 +1,7 @@
 package com.learning.broker.watchlist;
 
 import com.learning.broker.data.InMemoryAccountStore;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
@@ -30,11 +31,10 @@ public class WatchListController {
         return store.updateWatchList(ACCOUNT_ID, watchList);
     }
 
-    @Status(HttpStatus.NO_CONTENT)
-    @Delete(
-            produces = MediaType.APPLICATION_JSON
-    )
-    public void delete() {
+//    @Status(HttpStatus.NO_CONTENT)
+    @Delete
+    public HttpResponse<Void> delete() {
         store.deleteWatchList(ACCOUNT_ID);
+        return HttpResponse.noContent();
     }
 }
