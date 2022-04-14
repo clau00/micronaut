@@ -54,7 +54,7 @@ public class WalletController {
         }
 
         var wallet = store.depositToWallet(deposit);
-        LOG.debug("Deposit to wallet: {}", wallet);
+        LOG.debug("Wallet after Deposit: {}", wallet);
         return HttpResponse.ok().body(wallet);
     }
 
@@ -63,11 +63,15 @@ public class WalletController {
             consumes = MediaType.APPLICATION_JSON,
             produces = MediaType.APPLICATION_JSON
     )
-    public void withdrawFiatMoney(@Body WithdrawFiatMoney withdraw) {
+    public MutableHttpResponse<Object> withdrawFiatMoney(@Body WithdrawFiatMoney withdraw) {
         //  Option 2: Custom Error Processing
         if(!SUPPORTED_FIAT_CURRENCIES.contains(withdraw.getSymbol().getValue())) {
             throw new FiatCurrencyNotSupportedException(String.format("Only %s are supported", SUPPORTED_FIAT_CURRENCIES));
         }
+
+        var wallet = store.withdrawFromWallet(withdraw);
+        LOG.debug("Wallet after Withdraw: {}", wallet);
+        return HttpResponse.ok().body(wallet);
     }
 
 

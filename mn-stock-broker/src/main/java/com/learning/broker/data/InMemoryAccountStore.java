@@ -1,7 +1,9 @@
 package com.learning.broker.data;
 
+import com.learning.broker.Symbol;
 import com.learning.broker.wallet.DepositFiatMoney;
 import com.learning.broker.wallet.Wallet;
+import com.learning.broker.wallet.WithdrawFiatMoney;
 import com.learning.broker.watchlist.WatchList;
 import jakarta.inject.Singleton;
 
@@ -35,19 +37,27 @@ public class InMemoryAccountStore {
     }
 
     public Wallet depositToWallet(DepositFiatMoney deposit) {
-        var wallets = Optional.ofNullable(
-                walletsPerAccount.get(deposit.getAccountId())
+        return addAvailableInWallet(deposit.getAccountId(), deposit.getWalletId(), deposit.getSymbol(), deposit.getAmount());
+    }
+
+    public Wallet withdrawFromWallet(WithdrawFiatMoney withdraw) {
+        return addAvailableInWallet(withdraw.getAccountId(), withdraw.getWalletId(), withdraw.getSymbol(), withdraw.getAmount());
+    }
+
+    private Wallet addAvailableInWallet(UUID accountId, UUID walletId, Symbol symbol, BigDecimal changeAmount) {
+        final var wallets = Optional.ofNullable(
+                walletsPerAccount.get(accountId)
         ).orElse(
                 new HashMap<>()
         );
 
         var oldWallet = Optional.ofNullable(
-                wallets.get(deposit.getWalletId())
+                wallets.get(walletId)
         ).orElse(
-                new Wallet(ACCOUNT_ID, deposit.getWalletId(), deposit.getSymbol(), BigDecimal.ZERO, BigDecimal.ZERO)
+                new Wallet(ACCOUNT_ID, walletId, symbol, BigDecimal.ZERO, BigDecimal.ZERO)
         );
 
-        var newWallet = oldWallet.addAvailable(deposit.getAmount());
+        var newWallet = oldWallet.addAvailable(changeAmount);
 
         // Update wallet in store
         wallets.put(newWallet.getWalletId(), newWallet);
