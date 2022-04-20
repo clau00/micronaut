@@ -18,7 +18,6 @@ public class TestDataProvider {
     @EventListener
     public void init(StartupEvent event) {
         String email = "alice@example.com";
-        System.out.println(email);
         if (userRepository.findByEmail(email).isEmpty()) {
             UserEntity alice = new UserEntity();
             alice.setEmail(email);
