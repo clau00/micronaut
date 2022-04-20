@@ -11,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
     annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
     annotationProcessor("io.micronaut.security:micronaut-security-annotations")
@@ -24,6 +26,8 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.h2database:h2")
     implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.rxjava3:micronaut-rxjava3:2.2.1")
+    implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:2.2.1")
 
 }
 
