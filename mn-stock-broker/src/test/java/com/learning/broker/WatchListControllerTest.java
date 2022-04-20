@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.learning.broker.data.InMemoryAccountStore;
 import com.learning.broker.watchlist.WatchList;
 import com.learning.broker.watchlist.WatchListController;
-import io.micronaut.http.*;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
-import io.micronaut.rxjava3.http.client.Rx3HttpClient;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.security.authentication.UsernamePasswordCredentials;
 import io.micronaut.security.token.jwt.render.BearerAccessRefreshToken;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -17,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -30,6 +32,7 @@ public class WatchListControllerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(WatchListControllerTest.class);
     private static final UUID TEST_ACCOUNT_ID = WatchListController.ACCOUNT_ID;
+    public static final String ACCOUNT_WATCHLIST = "/account/watchlist";
 
     @Inject
     @Client("/")
@@ -44,10 +47,20 @@ public class WatchListControllerTest {
     }
 
     @Test
+    void unauthorizedAccessIsForbidden() {
+        try {
+            client.toBlocking().retrieve(ACCOUNT_WATCHLIST);
+            fail("Should fail if no exception is thrown");
+        } catch (HttpClientResponseException e) {
+            assertEquals(HttpStatus.UNAUTHORIZED, e.getStatus());
+        }
+    }
+
+    @Test
     void returnsEmptyWatchListForTestAccount() {
         final BearerAccessRefreshToken token = givenMyUserIsLoggedIn();
 
-        var request = GET("/account/watchlist")
+        var request = GET(ACCOUNT_WATCHLIST)
                 .accept(MediaType.APPLICATION_JSON)
                 .bearerAuth(token.getAccessToken());
         WatchList result = client.toBlocking().retrieve(request, WatchList.class);
@@ -60,7 +73,7 @@ public class WatchListControllerTest {
         final BearerAccessRefreshToken token = givenMyUserIsLoggedIn();
         givenWatchListForAccountExists();
 
-        var request = GET("/account/watchlist")
+        var request = GET(ACCOUNT_WATCHLIST)
                 .accept(MediaType.APPLICATION_JSON)
                 .bearerAuth(token.getAccessToken());
         var response = client.toBlocking().exchange(request, JsonNode.class);
@@ -86,7 +99,7 @@ public class WatchListControllerTest {
                 .collect(Collectors.toList());
         WatchList watchList = new WatchList(symbols);
 
-        var request = PUT("/account/watchlist", watchList)
+        var request = PUT(ACCOUNT_WATCHLIST, watchList)
                 .accept(MediaType.APPLICATION_JSON)
                 .bearerAuth(token.getAccessToken());
         final HttpResponse<Object> added = client.toBlocking().exchange(request);
@@ -101,7 +114,7 @@ public class WatchListControllerTest {
         givenWatchListForAccountExists();
         assertFalse(inMemoryAccountStore.getWatchList(TEST_ACCOUNT_ID).getSymbols().isEmpty());
 
-        var request = DELETE("/account/watchlist")
+        var request = DELETE(ACCOUNT_WATCHLIST)
                 .accept(MediaType.APPLICATION_JSON)
                 .bearerAuth(token.getAccessToken());
         var deleted = client.toBlocking().exchange(request);
