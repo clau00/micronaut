@@ -1,20 +1,17 @@
 package com.learning.broker;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Objects;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Symbol {
 
     private String value;
-
-    public Symbol() {}
-
-    public Symbol(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
 
     @Override
     public boolean equals(Object o) {
