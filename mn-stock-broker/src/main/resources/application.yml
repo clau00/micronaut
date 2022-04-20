@@ -1,6 +1,16 @@
 micronaut:
   application:
     name: mnStockBroker
+  server:
+    port: 8080
+  security:
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: changeThisSecretWithANewOneBeforeCommitAddaptedForLength
 netty:
   default:
     allocator:

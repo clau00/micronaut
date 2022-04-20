@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest
@@ -33,7 +35,7 @@ class SymbolsControllerTest {
 
     @Test
     void symbolsEndpointReturnsListOfSymbol() {
-        var response = client.toBlocking().exchange("/", JsonNode.class);
+        var response = client.toBlocking().exchange("/", List.class);
         assertEquals(HttpStatus.OK, response.getStatus());
         assertEquals(10, response.getBody().get().size());
     }
@@ -58,7 +60,7 @@ class SymbolsControllerTest {
         var offset7 = client.toBlocking().exchange("/filter?offset=7", JsonNode.class);
         assertEquals(HttpStatus.OK, offset7.getStatus());
         LOG.debug("Offset: 7: {}", offset7.getBody().get().size());
-        assertEquals(3, offset7.getBody().get().size());
+        assertEquals(4, offset7.getBody().get().size());
 
         var max2Offset7 = client.toBlocking().exchange("/filter?max=2&offset=7", JsonNode.class);
         assertEquals(HttpStatus.OK, max2Offset7.getStatus());
