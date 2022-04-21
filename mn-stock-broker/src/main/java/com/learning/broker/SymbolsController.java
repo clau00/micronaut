@@ -1,6 +1,8 @@
 package com.learning.broker;
 
 import com.learning.broker.data.InMemoryStore;
+import com.learning.broker.persistence.jpa.SymbolEntity;
+import com.learning.broker.persistence.jpa.SymbolsRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
@@ -18,9 +20,11 @@ import java.util.stream.Collectors;
 public class SymbolsController {
 
     private final InMemoryStore inMEmoryStore;
+    private final SymbolsRepository symbolsRepository;
 
-    public SymbolsController(InMemoryStore inMEmoryStore) {
+    public SymbolsController(InMemoryStore inMEmoryStore, SymbolsRepository symbolsRepository) {
         this.inMEmoryStore = inMEmoryStore;
+        this.symbolsRepository = symbolsRepository;
     }
 
     @Get
@@ -40,5 +44,10 @@ public class SymbolsController {
                 .skip(offset.orElse(0))
                 .limit(max.orElse(10))
                 .collect(Collectors.toList());
+    }
+
+    @Get("/jpa")
+    public List<SymbolEntity> allSymbolsViaJPA() {
+        return symbolsRepository.findAll();
     }
 }

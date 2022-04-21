@@ -29,6 +29,8 @@ dependencies {
     implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("org.postgresql:postgresql")
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    runtimeOnly("io.micronaut.sql:micronaut-jdbc-hikari")
 
 }
 
