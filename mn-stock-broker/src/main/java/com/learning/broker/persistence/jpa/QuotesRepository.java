@@ -1,5 +1,6 @@
 package com.learning.broker.persistence.jpa;
 
+import com.learning.broker.persistence.model.QuoteDTO;
 import com.learning.broker.persistence.model.QuoteEntity;
 import com.learning.broker.persistence.model.SymbolEntity;
 import io.micronaut.data.annotation.Repository;
@@ -17,7 +18,7 @@ public interface QuotesRepository extends CrudRepository<QuoteEntity, Integer> {
     Optional<QuoteEntity> findBySymbol(SymbolEntity symbol);
 
     // Ordering
-    List<QuoteEntity> listOrderByVolumeDesc();
+    List<QuoteDTO> listOrderByVolumeDesc();
 
-    List<QuoteEntity> listOrderByVolumeAsc();
+    List<QuoteDTO> listOrderByVolumeAsc();
 }

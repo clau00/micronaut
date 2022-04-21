@@ -3,6 +3,7 @@ package com.learning.broker;
 import com.learning.broker.api.RestApiResponse;
 import com.learning.broker.data.InMemoryStore;
 import com.learning.broker.persistence.jpa.QuotesRepository;
+import com.learning.broker.persistence.model.QuoteDTO;
 import com.learning.broker.persistence.model.QuoteEntity;
 import com.learning.broker.persistence.model.SymbolEntity;
 import com.learning.broker.wallet.error.CustomError;
@@ -82,12 +83,12 @@ public class QuotesController {
     }
 
     @Get("/jpa/ordered/desc")
-    public List<QuoteEntity> orderedDesc() {
+    public List<QuoteDTO> orderedDesc() {
         return quotesRepository.listOrderByVolumeDesc();
     }
 
     @Get("/jpa/ordered/asc")
-    public List<QuoteEntity> orderedAsc() {
+    public List<QuoteDTO> orderedAsc() {
         return quotesRepository.listOrderByVolumeAsc();
     }
 }
