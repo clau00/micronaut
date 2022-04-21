@@ -1,4 +1,4 @@
-package com.learning.broker.persistence.jpa;
+package com.learning.broker.persistence.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

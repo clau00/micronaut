@@ -19,7 +19,7 @@ public class InMemoryStore {
     private static final Logger LOG = LoggerFactory.getLogger(InMemoryStore.class);
     private final Map<String, Symbol> symbols = new HashMap<>();
     private final Map<String, Quote> cachedQuotes = new HashMap<>();
-    private final String[] symbolsStr = {"TGA", "QTNT", "FALN", "SBNY", "NBIX", "ORG", "VTWV", "QVCA", "PTIE", "BWLD"};
+    private final String[] symbolsStr = {"AMZN", "QTNT", "FALN", "SBNY", "NBIX", "ORG", "VTWV", "QVCA", "PTIE", "BWLD"};
     private ThreadLocalRandom current = ThreadLocalRandom.current();
 
     @PostConstruct

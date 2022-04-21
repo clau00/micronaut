@@ -1,7 +1,7 @@
 package com.learning.broker;
 
 import com.learning.broker.data.InMemoryStore;
-import com.learning.broker.persistence.jpa.SymbolEntity;
+import com.learning.broker.persistence.model.SymbolEntity;
 import com.learning.broker.persistence.jpa.SymbolsRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

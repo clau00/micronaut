@@ -1,5 +1,6 @@
 package com.learning.broker;
 
+import com.learning.broker.api.RestApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Quote {
+public class Quote implements RestApiResponse {
 
     private Symbol symbol;
     private BigDecimal bid;
