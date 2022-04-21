@@ -1,6 +1,6 @@
 package com.learning.broker;
 
-import com.learning.broker.data.InMEmoryStore;
+import com.learning.broker.data.InMemoryStore;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
@@ -26,7 +26,7 @@ class SymbolsControllerTest {
     HttpClient client;
 
     @Inject
-    InMEmoryStore inMEmoryStore;
+    InMemoryStore inMEmoryStore;
 
     @BeforeEach
     void init() {

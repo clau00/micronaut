@@ -1,6 +1,6 @@
 package com.learning.broker;
 
-import com.learning.broker.data.InMEmoryStore;
+import com.learning.broker.data.InMemoryStore;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @Controller("/symbols")
 public class SymbolsController {
 
-    private final InMEmoryStore inMEmoryStore;
+    private final InMemoryStore inMEmoryStore;
 
-    public SymbolsController(InMEmoryStore inMEmoryStore) {
+    public SymbolsController(InMemoryStore inMEmoryStore) {
         this.inMEmoryStore = inMEmoryStore;
     }
 

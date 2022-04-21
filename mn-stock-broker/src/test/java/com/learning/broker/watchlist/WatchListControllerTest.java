@@ -1,9 +1,8 @@
-package com.learning.broker;
+package com.learning.broker.watchlist;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.learning.broker.Symbol;
 import com.learning.broker.data.InMemoryAccountStore;
-import com.learning.broker.watchlist.WatchList;
-import com.learning.broker.watchlist.WatchListController;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
