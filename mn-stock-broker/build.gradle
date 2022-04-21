@@ -26,6 +26,8 @@ dependencies {
     implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:2.2.1")
     implementation("io.micronaut.reactor:micronaut-reactor")
     implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+    implementation("io.micronaut.flyway:micronaut-flyway")
+    implementation("org.postgresql:postgresql")
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
 
 }
