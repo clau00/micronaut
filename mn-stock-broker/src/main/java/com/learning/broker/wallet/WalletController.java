@@ -52,7 +52,8 @@ public class WalletController {
                     .body(new CustomError(
                             HttpStatus.BAD_REQUEST.getCode(),
                             "UNSUPPORTED_FIAT_CURRENCY",
-                            String.format("Only %s are supported", SUPPORTED_FIAT_CURRENCIES)
+                            String.format("Only %s are supported", SUPPORTED_FIAT_CURRENCIES),
+                            "/accounts/wallet/deposit"
                     ));
         }
 

@@ -19,14 +19,16 @@ public class CustomErrorResponseProcessor implements ErrorResponseProcessor<Cust
             customError = new CustomError(
                     response.getStatus().getCode(),
                     response.getStatus().name(),
-                    "No custom errors found..."
+                    "No custom errors found...",
+                    errorContext.getRequest().getPath()
             );
         } else {
             var firstError = errorContext.getErrors().get(0);
             customError = new CustomError(
                     response.getStatus().getCode(),
                     response.getStatus().name(),
-                    firstError.getMessage()
+                    firstError.getMessage(),
+                    errorContext.getRequest().getPath()
             );
         }
 
