@@ -6,6 +6,7 @@ import com.learning.broker.persistence.model.SymbolEntity;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.repository.CrudRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,4 +22,8 @@ public interface QuotesRepository extends CrudRepository<QuoteEntity, Integer> {
     List<QuoteDTO> listOrderByVolumeDesc();
 
     List<QuoteDTO> listOrderByVolumeAsc();
+
+    // Filtering
+    List<QuoteDTO> findByVolumeGreaterThan(BigDecimal volume);
+    List<QuoteDTO> findByVolumeGreaterThanOrderByVolumeAsc(BigDecimal volume);
 }
