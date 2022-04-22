@@ -7,12 +7,14 @@ import com.learning.broker.persistence.model.QuoteDTO;
 import com.learning.broker.persistence.model.QuoteEntity;
 import com.learning.broker.persistence.model.SymbolEntity;
 import com.learning.broker.wallet.error.CustomError;
+import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
@@ -96,5 +98,17 @@ public class QuotesController {
     @Get("/jpa/volume/{volume}")
     public List<QuoteDTO> filterByVolume(@PathVariable BigDecimal volume) {
         return quotesRepository.findByVolumeGreaterThan(volume);
+    }
+
+    @Get("/jpa/pagination{?page,volume}")
+    public List<QuoteDTO> volumeFilterPagination(@QueryValue Optional<Integer> page, @QueryValue Optional<BigDecimal> volume) {
+        int myPage = page.isEmpty() ? 0 : page.get();
+        BigDecimal myVolume = volume.isEmpty() ? BigDecimal.ZERO : volume.get();
+        return quotesRepository.findByVolumeGreaterThan(myVolume, Pageable.from(myPage, 3));
+    }
+
+    @Get("/jpa/pagination/{page}")
+    public List<QuoteDTO> allWithPagination(@PathVariable Integer page) {
+        return quotesRepository.list(Pageable.from(page, 5)).getContent();
     }
 }
